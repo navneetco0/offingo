@@ -55,13 +55,12 @@ export default function Home() {
             alignItems: "center",
           }}
         >
-          {/* <Image
+          <Image
             height={40}
-            layout="fill"
-            // width={"fit-content"}
-            src="https://offingo.com/static/media/logo.cdea72beae80a9ca5304.png"
+            width={124}
+            src="/logo.png"
             alt="offingo logo"
-          /> */}
+          />
           <p style={{ color: "#1A203C", fontSize: "16px", marginTop: "5px" }}>
             <i>
               Making your
@@ -185,12 +184,12 @@ export default function Home() {
               <p style={{ color: "#718096", fontSize:'16px' }}>& many more...</p>
             </div>
             <div style={{ position: "absolute", right: 0, bottom:"-4px" }}>
-              {/* <Image
+              <Image
                 width={309}
-                layout="fill"
-                src="https://offingo.com/static/media/offingo-app.85b0deb034f72596a993.png"
+                height={500}
+                src="/image.png"
                 alt=""
-              /> */}
+              />
             </div>
           </div>
         </div>
