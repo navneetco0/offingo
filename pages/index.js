@@ -53,6 +53,7 @@ export default function Home() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            margin:'50px 0'
           }}
         >
           <Image
@@ -68,9 +69,9 @@ export default function Home() {
             </i>
           </p>
         </div>
-        <div id="mid">
-          <div style={{ width: "fit-content", color: "#1A202C" }}>
-            <h1 style={{ fontSize: "60px", fontwidth: "700" }}>
+        <div className={styles.mid}>
+          <div className={styles.left}>
+            <h1 className={styles.heading}>
               We&apos;re launching soon!!!
             </h1>
             <p style={{ color: "#A0AEC0", fontSize: "16px" }}>
@@ -82,7 +83,7 @@ export default function Home() {
                 backgroundColor: "#EDF2F7",
                 borderRadius: "6px",
                 fontSize: "16px",
-                // border: "1px solid #E2E8F0",
+                width:'100%'
               }}
             >
               <div
@@ -90,7 +91,7 @@ export default function Home() {
               >
                 +91
               </div>
-              <div style={{ flexGrow: 1, display: "flex", padding: "3px", border:focus?'1px solid #3182CE':"1px solid #E2E8F0", borderRadius:'0 6px 6px 0'  }}>
+              <div  style={{ flexGrow: 1, display: "flex", padding: "3px", border:focus?'1px solid #3182CE':"1px solid #E2E8F0", borderRadius:'0 6px 6px 0'  }}>
                 <input
                   style={{
                     flexGrow: 1,
@@ -99,6 +100,7 @@ export default function Home() {
                     paddingLeft: "30px",
                     outline: "none",
                     fontSize: "16px",
+                    width:'100%'
                   }}
                   onFocus={()=>setFocus(true)}
                   onBlur={()=>setFocus(false)}
@@ -106,15 +108,7 @@ export default function Home() {
                   placeholder="Enter your mobile number"
                 />
                 <button
-                  style={{
-                    backgroundColor: "#F56565",
-                    color: "white",
-                    borderRadius: "6px",
-                    border: "none",
-                    padding: "0 16px",
-                    fontSize: "16px",
-                    fontWeight: 600,
-                  }}
+                className={styles.phoneButton}
                 >
                   Notify me
                 </button>
@@ -130,7 +124,7 @@ export default function Home() {
               >
                 Connect with us on
               </p>
-              <div style={{ display: "flex", gap: "10px" }}>
+              <div className={styles.social_medias}>
                 {SocialMedias.map((element, index) => (
                   <a key={index} rel="noreferrer" target="_blank" href={element.link}>
                     <div className={styles.social_button}>
@@ -150,43 +144,27 @@ export default function Home() {
               display: "flex",
               alignItems: "center",
               height: "inherit",
-              boxShadow:"inset 0px -11px 8px -10px #CCC"
+              boxShadow:"inset 0px -11px 8px -10px #CCC",
+              justifyContent:'right'
             }}
           >
             <div
-              style={{
-                backgroundColor: "#ffcece",
-                width: "60%",
-                padding: "16px",
-                borderRadius: "10px",
-                marginLeft:"30px"
-              }}
+            className={styles.rightTexts}
             >
               {texts.map((element, index) => (
                 <div
                   key={index}
-                  style={{
-                    fontStyle: "italic",
-                    fontSize: "18px",
-                    color: "#F56565",
-                    padding: "16px 0",
-                    borderBottom: index !== 3 ? "2px solid #F56565" : "",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    marginTop:"8px",
-                    whiteSpace:'wrap'
-                  }}
+                  className={styles.texts}
+                  style={{borderBottom: index !== 3 ? "2px solid #F56565" : ""}}
                 >
                   <Check /> {element}
                 </div>
               ))}
               <p style={{ color: "#718096", fontSize:'16px' }}>& many more...</p>
             </div>
-            <div style={{ position: "absolute", right: 0, bottom:"-4px" }}>
+            <div className={styles.logoImage}>
               <Image
-                width={309}
-                height={500}
+               layout="fill"
                 src="/image.png"
                 alt=""
               />

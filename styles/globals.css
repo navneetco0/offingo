@@ -14,12 +14,7 @@ a {
 * {
   box-sizing: border-box;
 }
-#mid{
-  width: 90%;
-  display: flex;
-  flex-direction: row;
-  margin-top: 80px;
-}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
