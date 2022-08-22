@@ -1,8 +1,43 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import { useState } from "react";
+import { Check } from "../assets/svgs/Check";
+import { Facebook } from "../assets/svgs/Facebook";
+import { Instagram } from "../assets/svgs/Instagram";
+import { Link } from "../assets/svgs/Link";
+import { Linkedin } from "../assets/svgs/Linkedin";
+import { Pinterest } from "../assets/svgs/Pinterest";
+import styles from "../styles/Home.module.css";
 
 export default function Home() {
+  const [focus, setFocus] = useState(false);
+  const texts = [
+    "Check product availibility",
+    "Get notified easily",
+    "Subscribe multipe stores",
+    "Browse 100+ stores",
+  ];
+  const SocialMedias = [
+    {
+      text: "Instagram",
+      icon: <Instagram />,
+      link: "https://www.instagram.com/offingoofficial/",
+    },
+    {
+      text: "Facebook",
+      icon: <Facebook />,
+      link: "https://www.facebook.com/offingoofficial/?_rdr",
+    },
+    {
+      text: "Linkedin",
+      icon: <Linkedin />,
+      link: "https://www.linkedin.com/in/offingoofficial/?originalSubdomain=in",
+    },
+    {
+      text: "Pinterest",
+      icon: <Pinterest />,
+      link: "https://www.pinterest.com/offingoofficial/",
+    },
+  ];
   return (
     <div className={styles.container}>
       <Head>
@@ -12,58 +47,155 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            // marginTop: "30px",
+          }}
+        >
+          <img
+            height={"40px"}
+            src="https://offingo.com/static/media/logo.cdea72beae80a9ca5304.png"
+            alt="offingo logo"
+          />
+          <p style={{ color: "#1A203C", fontSize: "16px", marginTop: "5px" }}>
+            <i>
+              Making your{" "}
+              <q style={{ color: "#C53030" }}>shopping experience</q> better
+            </i>
+          </p>
+        </div>
+        <div id="mid">
+          <div style={{ width: "fit-content", color: "#1A202C" }}>
+            <h1 style={{ fontSize: "60px", fontwidth: "700" }}>
+              We're launching soon!!!
+            </h1>
+            <p style={{ color: "#A0AEC0", fontSize: "16px" }}>
+              Notify me when it lauches
             </p>
-          </a>
+            <div
+              style={{
+                display: "flex",
+                backgroundColor: "#EDF2F7",
+                borderRadius: "6px",
+                fontSize: "16px",
+                // border: "1px solid #E2E8F0",
+              }}
+            >
+              <div
+                style={{ padding: "14px", border: "1px solid #E2E8F0", borderRadius:'6px 0 0 6px' }}
+              >
+                +91
+              </div>
+              <div style={{ flexGrow: 1, display: "flex", padding: "3px", border:focus?'1px solid #3182CE':"1px solid #E2E8F0", borderRadius:'0 6px 6px 0'  }}>
+                <input
+                  style={{
+                    flexGrow: 1,
+                    backgroundColor: "transparent",
+                    border: "transparent",
+                    paddingLeft: "30px",
+                    outline: "none",
+                    fontSize: "16px",
+                  }}
+                  onFocus={()=>setFocus(true)}
+                  onBlur={()=>setFocus(false)}
+                  type="text"
+                  placeholder="Enter your mobile number"
+                />
+                <button
+                  style={{
+                    backgroundColor: "#F56565",
+                    color: "white",
+                    borderRadius: "6px",
+                    border: "none",
+                    padding: "0 16px",
+                    fontSize: "16px",
+                    fontWeight: 600,
+                  }}
+                >
+                  Notify me
+                </button>
+              </div>
+            </div>
+            <div>
+              <p
+                style={{
+                  color: "#A0AEC0",
+                  fontSize: "16px",
+                  marginTop: "60px",
+                }}
+              >
+                Connect with us on
+              </p>
+              <div style={{ display: "flex", gap: "10px" }}>
+                {SocialMedias.map((element, index) => (
+                  <a key={index} target="_blank" href={element.link}>
+                    <div className={styles.social_button}>
+                      {element.icon}
+                      {element.text}
+                      <Link />
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div
+            style={{
+              position: "relative",
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              height: "inherit",
+              boxShadow:"inset 0px -11px 8px -10px #CCC"
+            }}
+          >
+            <div
+              style={{
+                backgroundColor: "#ffcece",
+                width: "60%",
+                padding: "16px",
+                borderRadius: "10px",
+                marginLeft:"30px"
+              }}
+            >
+              {texts.map((element, index) => (
+                <div
+                  key={index}
+                  style={{
+                    fontStyle: "italic",
+                    fontSize: "18px",
+                    color: "#F56565",
+                    padding: "16px 0",
+                    borderBottom: index !== 3 ? "2px solid #F56565" : "",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    marginTop:"8px",
+                    whiteSpace:'wrap'
+                  }}
+                >
+                  <Check /> {element}
+                </div>
+              ))}
+              <p style={{ color: "#718096", fontSize:'16px' }}>& many more...</p>
+            </div>
+            <div style={{ position: "absolute", right: 0, bottom:"-4px" }}>
+              <img
+                width={"309px"}
+                src="https://offingo.com/static/media/offingo-app.85b0deb034f72596a993.png"
+                alt=""
+              />
+            </div>
+          </div>
         </div>
       </main>
 
       <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
+        © all rights reserved to offingo
       </footer>
     </div>
-  )
+  );
 }

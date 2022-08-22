@@ -1,10 +1,8 @@
 .container {
-  padding: 0 2rem;
+  padding: 0;
 }
-
 .main {
   min-height: 100vh;
-  padding: 4rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -12,13 +10,29 @@
   align-items: center;
 }
 
-.footer {
+.social_button{
+  height: 40px;
+  padding: 0 16px;
   display: flex;
-  flex: 1;
-  padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
-  justify-content: center;
   align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  border:1px solid #E2E8F0;
+  border-radius: 6px;
+}
+
+.social_button:hover{
+  background-color: #E2E8F0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.footer {
+    background-color: #171923;
+    color: white;
+    padding: 8px;
+    font-size: 16px;
+    
 }
 
 .footer a {
