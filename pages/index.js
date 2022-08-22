@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Image from "next/image"
 import { useState } from "react";
 import { Check } from "../assets/svgs/Check";
 import { Facebook } from "../assets/svgs/Facebook";
@@ -55,11 +56,13 @@ export default function Home() {
             // marginTop: "30px",
           }}
         >
-          <img
-            height={"40px"}
+          {/* <Image
+            height={40}
+            layout="fill"
+            // width={"fit-content"}
             src="https://offingo.com/static/media/logo.cdea72beae80a9ca5304.png"
             alt="offingo logo"
-          />
+          /> */}
           <p style={{ color: "#1A203C", fontSize: "16px", marginTop: "5px" }}>
             <i>
               Making your{" "}
@@ -183,11 +186,12 @@ export default function Home() {
               <p style={{ color: "#718096", fontSize:'16px' }}>& many more...</p>
             </div>
             <div style={{ position: "absolute", right: 0, bottom:"-4px" }}>
-              <img
-                width={"309px"}
+              {/* <Image
+                width={309}
+                layout="fill"
                 src="https://offingo.com/static/media/offingo-app.85b0deb034f72596a993.png"
                 alt=""
-              />
+              /> */}
             </div>
           </div>
         </div>
