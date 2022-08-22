@@ -37,7 +37,7 @@ export default function Home() {
       text: "Pinterest",
       icon: <Pinterest />,
       link: "https://www.pinterest.com/offingoofficial/",
-    },
+    }
   ];
   return (
     <div className={styles.container}>
@@ -53,7 +53,6 @@ export default function Home() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            // marginTop: "30px",
           }}
         >
           {/* <Image
@@ -65,7 +64,7 @@ export default function Home() {
           /> */}
           <p style={{ color: "#1A203C", fontSize: "16px", marginTop: "5px" }}>
             <i>
-              Making your{" "}
+              Making your
               <q style={{ color: "#C53030" }}>shopping experience</q> better
             </i>
           </p>
@@ -73,7 +72,7 @@ export default function Home() {
         <div id="mid">
           <div style={{ width: "fit-content", color: "#1A202C" }}>
             <h1 style={{ fontSize: "60px", fontwidth: "700" }}>
-              We're launching soon!!!
+              We&apos;re launching soon!!!
             </h1>
             <p style={{ color: "#A0AEC0", fontSize: "16px" }}>
               Notify me when it lauches
@@ -134,7 +133,7 @@ export default function Home() {
               </p>
               <div style={{ display: "flex", gap: "10px" }}>
                 {SocialMedias.map((element, index) => (
-                  <a key={index} target="_blank" href={element.link}>
+                  <a key={index} rel="noreferrer" target="_blank" href={element.link}>
                     <div className={styles.social_button}>
                       {element.icon}
                       {element.text}
