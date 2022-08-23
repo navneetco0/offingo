@@ -7,19 +7,38 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Box,
-  InputGroup,
   Flex,
-  Text,
-  Textarea
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Box,
+  Show,
+  Hide,
+  Divider
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import React, { useEffect } from "react";
+import { Logo } from "../assets/svgs/Logo";
+import { Menu } from "../assets/svgs/Menu";
+import { Close } from "../assets/svgs/Close";
 
 export default function Home({ token }) {
+  const [tok, setTok] = useState(token);
+  const [loginBox, setLoginBox] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [tok, setTok] = useState(token);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
+  const [pageStatus, setPageStatus] = useState(null);
+  const [menuStatus, setMenuStatus] = useState(false);
+
   const handleSubmit = () => {
     axios
       .post("http://localhost:5000/login", {
@@ -34,9 +53,10 @@ export default function Home({ token }) {
           },
           body: JSON.stringify({ token: res.data.token }),
         });
-       setTok(res.data.token)
+        setTok(res.data.token);
       })
       .catch((error) => console.log(error));
+    onClose();
   };
 
   return (
@@ -49,67 +69,125 @@ export default function Home({ token }) {
         </Head>
 
         <main>
-         
+          <Flex
+            w={"100%"}
+            minH="100vh"
+            justifyContent="center"
+            alignItems="center"
+            direction={"column"}
+          >
             <Flex
+              pt={["10px", "12px"]}
+              pb={["10px", "12px"]}
+              position="fixed"
+              top={0}
+              dir="row"
               w={"100%"}
-              minH="100vh"
-              justifyContent="center"
+              bg="white"
+              borderBottom={"1px solid rgba(127, 127, 127, 0.1)"}
+              h={"fit-content"}
+              pl="5%"
               alignItems="center"
-              direction={"column"}
+              pr={"5%"}
+              justifyContent="space-between"
             >
-            {tok?<>
-            <Box w={"70%"} resize="none">
-                <Textarea minH="500px" mt={"50px"} placeholder="write your blog here..." />
-            </Box>
-            </>:
-              <FormControl
-                isRequired
-                w={"400px"}
-                m="auto"
-                border="1px solid rgba(127, 127, 127, 0.2)"
-                borderRadius={"16px"}
-                padding="20px"
-              >
-                <Text
-                  fontSize={"50px"}
-                  fontWeight="600"
-                  textAlign={"center"}
-                  marginBottom="40px"
-                >
-                  Sign In
-                </Text>
-                <InputGroup size={"md"} mb="40px" display={"block"}>
+              <Box w={["80px", "104px", "134px", "134px"]}>
+                <Logo h={"100%"} />
+              </Box>
+              <Hide breakpoint="(max-width: 600px)">
+                {tok ? (
+                  <Flex gap={"10px"}>
+                    <Button colorScheme={"green"} variant={"ghost"}>
+                      Write Blog
+                    </Button>
+                    <Button colorScheme={"red"}>Logout</Button>
+                  </Flex>
+                ) : (
+                  <Button onClick={onOpen} colorScheme={"whatsapp"}>
+                    Login
+                  </Button>
+                )}
+              </Hide>
+              <Show breakpoint="(max-width: 600px)">
+                <Box cursor={"pointer"} onClick={() => setMenuStatus(true)}>
+                  <Menu />
+                </Box>
+              </Show>
+            </Flex>
+          </Flex>
+          <Modal
+            initialFocusRef={initialRef}
+            finalFocusRef={finalRef}
+            isOpen={isOpen}
+            onClose={onClose}
+          >
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Sign in here</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody pb={6}>
+                <FormControl>
                   <FormLabel>Username</FormLabel>
-
                   <Input
-                    value={username}
-                    onChange={(event) => setUsername(event.target.value)}
-                    id="username"
+                    ref={initialRef}
                     placeholder="Enter your username here..."
+                    onChange={(e) => setUsername(e.target.value)}
                   />
-                </InputGroup>
-                <InputGroup size="md" display="block">
+                </FormControl>
+
+                <FormControl mt={4}>
                   <FormLabel>Password</FormLabel>
                   <Input
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                    id="password"
-                    pr="4.5rem"
                     placeholder="Enter your password here..."
+                    onChange={(e) => setPassword(e.target.value)}
                   />
-                </InputGroup>
+                </FormControl>
+              </ModalBody>
+
+              <ModalFooter>
                 <Button
-                  mt={4}
-                  colorScheme="red"
-                  type="submit"
-                  display={"block"}
-                  m="40px auto 0"
-                  onClick={() => handleSubmit()}
+                  colorScheme="blue"
+                  mr={3}
+                  onClick={() => {
+                    handleSubmit();
+                  }}
                 >
-                  Submit
+                  Save
                 </Button>
-              </FormControl>}
-            </Flex>
+                <Button onClick={onClose}>Cancel</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+          <Show breakpoint="(max-width: 600px)">
+            {menuStatus && (
+              <Flex
+                dir="row"
+                bg="white"
+                position="fixed"
+                w={"100%"}
+                minH={"100vh"}
+                top={0}
+                left={0}
+                zIndex="2"
+                justify={"center"}
+                alignItems={"center"}
+              >
+                <Box
+                  position={"absolute"}
+                  left="40px"
+                  top={"40px"}
+                  cursor="pointer"
+                  onClick={() => setMenuStatus(false)}
+                >
+                  <Close />
+                </Box>
+                <Flex direction={"column"} w="100%">
+                  <Button variant={'ghost'} w={"100%"}>Write Blog</Button>
+                  <Button variant={'ghost'} w={"100%"}>Logout</Button>
+                </Flex>
+              </Flex>
+            )}
+          </Show>
         </main>
 
         <footer></footer>
