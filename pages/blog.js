@@ -3,13 +3,11 @@ import axios from "axios";
 import cookies from "js-cookie";
 import {
   ChakraProvider,
-  InputLeftElement,
   Button,
   FormControl,
   FormLabel,
   Input,
   Box,
-  InputRightElement,
   InputGroup,
   Flex,
   Text,
@@ -45,7 +43,7 @@ export default function Home({ token }) {
     <ChakraProvider>
       <div>
         <Head>
-          <title>Offingo - admin</title>
+          <title>Offingo - blog</title>
           <meta name="description" content="offingo" />
           <link rel="icon" href="/favicon.png" />
         </Head>

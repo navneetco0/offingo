@@ -24,7 +24,7 @@
 
 .left {
   color: #1a202c;
-  width: 40%;
+  width: 100%;
 }
 
 .heading {
@@ -271,7 +271,7 @@
 .footerImg{
   display:flex;
   gap:9px;
-  width:fit-content;
+  width:max-content;
 }
 
 @media (max-width: 600px) {
@@ -307,11 +307,17 @@
   }
 } */
 
+.soacialP{
+  color: #A0AEC0;
+  font-size: 20px;
+  margin-top: 84px;
+}
+
 
 
 @media only screen and (max-width: 1370px) {
   .social_medias {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
   }
   .heading {
@@ -330,6 +336,7 @@
   .left {
     width: 100%;
     margin-bottom: 20px;
+    margin-top: -200px;
   }
   .clothes {
     display: flex;
@@ -394,6 +401,13 @@
     top: 70px;
     z-index: 3;
   }
+  .social_medias{
+    width: fit-content;
+    margin: auto;
+  }
+  .soacialP{
+    text-align: center;
+  }
 }
 
 @media only screen and (max-width: 950px) {
@@ -410,13 +424,11 @@
     width: 90%;
     flex-direction: column-reverse;
     margin: 80px 5% 0 5%;
-    border: 1px solid red;
   }
   .left {
     margin-bottom: 20px;
     column-gap: 0;
     row-gap: 0;
-    border: 1px solid blue;
   }
   .InputDiv{
     width: 100%;
@@ -434,7 +446,6 @@
 @media only screen and (max-width: 700px) {
   .social_medias {
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
     gap: 10px;
   }
 
@@ -469,7 +480,7 @@
 @media only screen and (max-width: 540px) {
   .social_medias {
     grid-template-columns: repeat(1, 1fr);
-    grid-template-rows: repeat(1, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     gap: 10px;
   }
   .rightTexts {

@@ -159,8 +159,9 @@ export default function Home() {
               />
               <button className={styles.phoneButton}>Notify me</button>
             </div>
-            <div>
+            <div >
               <p
+              className={styles.soacialP}
                 style={{
                   color: "#A0AEC0",
                   fontSize: "20px",
