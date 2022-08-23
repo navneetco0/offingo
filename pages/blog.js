@@ -19,7 +19,8 @@ import {
   Box,
   Show,
   Hide,
-  Divider
+  Divider,
+  CloseButton
 } from "@chakra-ui/react";
 import { useState, useSyncExternalStore } from "react";
 import React, { useEffect } from "react";
@@ -97,7 +98,7 @@ export default function Home({ token }) {
               <Hide breakpoint="(max-width: 600px)">
                 {tok ? (
                   <Flex gap={"10px"}>
-                    <Button colorScheme={"green"} variant={"ghost"}>
+                    <Button colorScheme={"green"} variant={"ghost"} onClick={()=>setPageStatus('write')}>
                       Write Blog
                     </Button>
                     <Button colorScheme={"red"}>Logout</Button>
@@ -114,6 +115,9 @@ export default function Home({ token }) {
                 </Box>
               </Show>
             </Flex>
+            <Box mt={'150px'}>
+                 
+            </Box>
           </Flex>
           <Modal
             initialFocusRef={initialRef}
@@ -172,19 +176,16 @@ export default function Home({ token }) {
                 justify={"center"}
                 alignItems={"center"}
               >
-                <Box
-                  position={"absolute"}
-                  left="40px"
-                  top={"40px"}
-                  cursor="pointer"
-                  onClick={() => setMenuStatus(false)}
-                >
-                  <Close />
+                <Box position={'absolute'} left="30px" top="30" onClick={()=>{setMenuStatus(false)}}>
+                    <CloseButton  size='lg' />
                 </Box>
+                {tok?
                 <Flex direction={"column"} w="100%">
-                  <Button variant={'ghost'} w={"100%"}>Write Blog</Button>
-                  <Button variant={'ghost'} w={"100%"}>Logout</Button>
-                </Flex>
+                    <Button variant={'ghost'} w={"100%"} onClick={()=>{setMenuStatus(false); setPageStatus('write')}}>Write Blog</Button>
+                    <Button variant={'ghost'} w={"100%"}>Logout</Button>
+              </Flex>:<Flex direction={"column"} w="100%">
+              <Button variant={'ghost'} w={"100%"} onClick={()=>{setMenuStatus(false);onOpen()}}>Login</Button>
+                </Flex>}
               </Flex>
             )}
           </Show>

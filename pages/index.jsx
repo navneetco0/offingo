@@ -125,7 +125,9 @@ export default function Home() {
 
       <main className={styles.main}>
         <div className={styles.webLogo}>
-          <Logo />
+          <div style={{width:'139px'}}>
+            <Logo  />
+          </div>
           <LogoText />
         </div>
         <div className={styles.mid}>
@@ -258,7 +260,9 @@ export default function Home() {
 
       <footer className={styles.footer}>
         <div style={{ flexGrow: 1 }}>
-          <Logo />
+          <div style={{width:'139px'}}>
+            <Logo />
+          </div>
           <p
             style={{
               fontStyle: "normal",
