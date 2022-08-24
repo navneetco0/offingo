@@ -35,7 +35,7 @@ import { Menu } from "../assets/svgs/Menu";
 import { Close } from "../assets/svgs/Close";
 
 export default function Home({ token }) {
-  const API = 'https://offingo.herokuapp.com'
+  const API = "https://offingo.herokuapp.com";
   const [tok, setTok] = useState(token);
   const [title, setTitle] = useState("");
   const [file, setFile] = useState("");
@@ -54,7 +54,7 @@ export default function Home({ token }) {
   const toast = useToast();
   const handleSubmit = () => {
     axios
-      .post("http://localhost:5000/login", {
+      .post(`${API}/login`, {
         username: username,
         password: password,
       })
@@ -73,26 +73,22 @@ export default function Home({ token }) {
   };
   const saveBlog = async () => {
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('title', title);
-    formData.append('content', content);
-    await axios.post(
-      "http://localhost:5000/blog",
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${tok}`,
-        },
-      }
-    );
+    formData.append("file", file);
+    formData.append("title", title);
+    formData.append("content", content);
+    await axios.post("http://localhost:5000/blog", formData, {
+      headers: {
+        Authorization: `Bearer ${tok}`,
+      },
+    });
     axios
-      .get("http://localhost:5000/blog")
+      .get(`${API}/blog`)
       .then((res) => setBlogData(res.data))
       .catch((error) => console.log(error));
   };
   const updateValue = async () => {
     await axios.patch(
-      `http://localhost:5000/blog/${blogData[pageStatus - 1]._id}`,
+      `${API}/blog/${blogData[pageStatus - 1]._id}`,
       { title, content },
       {
         headers: {
@@ -101,13 +97,13 @@ export default function Home({ token }) {
       }
     );
     axios
-      .get("http://localhost:5000/blog")
+      .get(`${API}/blog`)
       .then((res) => setBlogData(res.data))
       .catch((error) => console.log(error));
   };
   const delteBlog = async () => {
     await axios
-      .delete(`http://localhost:5000/blog/${blogData[pageStatus - 1]._id}`, {
+      .delete(`${API}/blog/${blogData[pageStatus - 1]._id}`, {
         headers: {
           Authorization: `Bearer ${tok}`,
         },
@@ -124,7 +120,7 @@ export default function Home({ token }) {
       });
 
     axios
-      .get("http://localhost:5000/blog")
+      .get(`${API}/blog`)
       .then((res) => setBlogData(res.data))
       .catch((error) => console.log(error));
   };
@@ -241,10 +237,17 @@ export default function Home({ token }) {
                         >
                           <Box
                             h={"100px"}
+                            w={"100%"}
                             backgroundColor="rgba(127, 127, 127, 0.2)"
                             borderRadius="6px 6px 0 0"
+                            overflow={"hidden"}
+                            position={"relative"}
                           >
-                            <Image layout="fill" src={`https://offingo.herokuapp.com/${Element.image.filePath}`} />
+                            <Image
+                              borderRadius="6px 6px 0 0"
+                              layout="fill"
+                              src={`${API}/${Element.image.filePath}`}
+                            />
                           </Box>
                           <Box h={"fit-content"} p="5px">
                             <Box color="black" fontWeight="500">
@@ -452,10 +455,17 @@ export default function Home({ token }) {
                           >
                             <Box
                               h={"100px"}
+                              w={"100%"}
                               backgroundColor="rgba(127, 127, 127, 0.2)"
                               borderRadius="6px 6px 0 0"
+                              overflow={"hidden"}
+                              position={"relative"}
                             >
-                              <img />
+                              <Image
+                                borderRadius="6px 6px 0 0"
+                                layout="fill"
+                                src={`${API}/${Element.image.filePath}`}
+                              />
                             </Box>
                             <Box h={"fit-content"} p="5px">
                               <Box color="black" fontWeight="500">
@@ -485,10 +495,11 @@ export default function Home({ token }) {
                       ))}
                   </Box>
                 </Hide>
-                <Box mt={"140px"} flexGrow={1} pl="5%" pr="5%">
+                <Box mt={"80px"} flexGrow={1} pl="5%" pr="5%" overflow={"scroll"}>
                   {updateStatus === pageStatus ? (
                     <>
                       <Input
+                      mt="50px"
                         fontSize={"40px"}
                         fontWeight="500"
                         value={title}
@@ -505,8 +516,20 @@ export default function Home({ token }) {
                       <Text fontSize={"40px"} fontWeight="500">
                         {blogData[pageStatus - 1].title}
                       </Text>
-                      <Box>
-                        {/* <Image layout="fill" src={"https://dummyimage.com/600x400/bebebe"}/> */}
+                      <Box
+                        h={"400px"}
+                        w={"100%"}
+                        mt="20px"
+                        backgroundColor="rgba(127, 127, 127, 0.2)"
+                        borderRadius="6px"
+                        overflow={"hidden"}
+                        position={"relative"}
+                      >
+                        <Image
+                          borderRadius="6px 6px 0 0"
+                          layout="fill"
+                          src={`${API}/${blogData[pageStatus-1].image.filePath}`}
+                        />
                       </Box>
                       <Text fontSize={"20px"} mt="20px" color="gray">
                         {blogData[pageStatus - 1].content}
@@ -546,7 +569,7 @@ export default function Home({ token }) {
                 <FormControl mt={4}>
                   <FormLabel>Password</FormLabel>
                   <Input
-                  type={"password"}
+                    type={"password"}
                     placeholder="Enter your password here..."
                     onChange={(e) => setPassword(e.target.value)}
                   />
