@@ -1,5 +1,6 @@
 import Head from "next/head";
 import axios from "axios";
+import Image from "next/image";
 import cookies from "js-cookie";
 import {
   ChakraProvider,
@@ -20,8 +21,13 @@ import {
   Show,
   Hide,
   Divider,
-  CloseButton
+  CloseButton,
+  Text,
+  Textarea,
+  useToast,
+  FormErrorMessage,
 } from "@chakra-ui/react";
+
 import { useState, useSyncExternalStore } from "react";
 import React, { useEffect } from "react";
 import { Logo } from "../assets/svgs/Logo";
@@ -29,17 +35,23 @@ import { Menu } from "../assets/svgs/Menu";
 import { Close } from "../assets/svgs/Close";
 
 export default function Home({ token }) {
+  const API = 'https://offingo.herokuapp.com'
   const [tok, setTok] = useState(token);
+  const [title, setTitle] = useState("");
+  const [file, setFile] = useState("");
+  const [error, setError] = useState(null);
+  const [content, setContent] = useState("");
   const [loginBox, setLoginBox] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const [blogData, setBlogData] = useState(null);
+  const [updateStatus, setUpdateStatus] = useState(null);
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   const [pageStatus, setPageStatus] = useState(null);
   const [menuStatus, setMenuStatus] = useState(false);
-
+  const toast = useToast();
   const handleSubmit = () => {
     axios
       .post("http://localhost:5000/login", {
@@ -59,6 +71,70 @@ export default function Home({ token }) {
       .catch((error) => console.log(error));
     onClose();
   };
+  const saveBlog = async () => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('title', title);
+    formData.append('content', content);
+    await axios.post(
+      "http://localhost:5000/blog",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${tok}`,
+        },
+      }
+    );
+    axios
+      .get("http://localhost:5000/blog")
+      .then((res) => setBlogData(res.data))
+      .catch((error) => console.log(error));
+  };
+  const updateValue = async () => {
+    await axios.patch(
+      `http://localhost:5000/blog/${blogData[pageStatus - 1]._id}`,
+      { title, content },
+      {
+        headers: {
+          Authorization: `Bearer ${tok}`,
+        },
+      }
+    );
+    axios
+      .get("http://localhost:5000/blog")
+      .then((res) => setBlogData(res.data))
+      .catch((error) => console.log(error));
+  };
+  const delteBlog = async () => {
+    await axios
+      .delete(`http://localhost:5000/blog/${blogData[pageStatus - 1]._id}`, {
+        headers: {
+          Authorization: `Bearer ${tok}`,
+        },
+      })
+      .then((res) => setPageStatus(pageStatus - 1))
+      .catch((error) => {
+        if (error.response.data === "jwt expires") setTok(null);
+        toast({
+          position: "top",
+          title: error.response.data,
+          variant: "solid",
+          isClosable: true,
+        });
+      });
+
+    axios
+      .get("http://localhost:5000/blog")
+      .then((res) => setBlogData(res.data))
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    axios
+      .get(`${API}/blog`)
+      .then((res) => setBlogData(res.data))
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <ChakraProvider>
@@ -70,6 +146,58 @@ export default function Home({ token }) {
         </Head>
 
         <main>
+          {/* navbar */}
+          <Flex
+            pt={["10px", "12px"]}
+            pb={["10px", "12px"]}
+            position="fixed"
+            top={0}
+            dir="row"
+            w={"100%"}
+            bg="white"
+            borderBottom={"1px solid rgba(127, 127, 127, 0.1)"}
+            h={"fit-content"}
+            pl="5%"
+            alignItems="center"
+            pr={"5%"}
+            justifyContent="space-between"
+            zIndex={5}
+          >
+            <Box
+              w={["80px", "104px", "134px", "134px"]}
+              cursor="pointer"
+              onClick={() => setPageStatus(null)}
+            >
+              <Logo h={"100%"} />
+            </Box>
+            <Hide breakpoint="(max-width: 600px)">
+              {tok ? (
+                <Flex gap={"10px"}>
+                  <Button
+                    colorScheme={"green"}
+                    variant={"ghost"}
+                    onClick={() => {
+                      setPageStatus("write");
+                      setContent(null);
+                      setTitle(null);
+                    }}
+                  >
+                    Write Blog
+                  </Button>
+                  <Button colorScheme={"red"}>Logout</Button>
+                </Flex>
+              ) : (
+                <Button onClick={onOpen} colorScheme={"whatsapp"}>
+                  Login
+                </Button>
+              )}
+            </Hide>
+            <Show breakpoint="(max-width: 600px)">
+              <Box cursor={"pointer"} onClick={() => setMenuStatus(true)}>
+                <Menu />
+              </Box>
+            </Show>
+          </Flex>
           <Flex
             w={"100%"}
             minH="100vh"
@@ -77,48 +205,324 @@ export default function Home({ token }) {
             alignItems="center"
             direction={"column"}
           >
-            <Flex
-              pt={["10px", "12px"]}
-              pb={["10px", "12px"]}
-              position="fixed"
-              top={0}
-              dir="row"
-              w={"100%"}
-              bg="white"
-              borderBottom={"1px solid rgba(127, 127, 127, 0.1)"}
-              h={"fit-content"}
-              pl="5%"
-              alignItems="center"
-              pr={"5%"}
-              justifyContent="space-between"
-            >
-              <Box w={["80px", "104px", "134px", "134px"]}>
-                <Logo h={"100%"} />
-              </Box>
-              <Hide breakpoint="(max-width: 600px)">
+            {/* write  */}
+            {!pageStatus ? (
+              <Flex
+                w={"100%"}
+                h={"calc(100vh - 80px)"}
+                p="0 10%"
+                flexWrap="wrap"
+                mt="80px"
+              >
+                <Flex
+                  w="full"
+                  h="max-content"
+                  flexWrap="wrap"
+                  margin={"0 auto"}
+                  // justifyContent="space-between"
+                >
+                  {blogData &&
+                    blogData.map((Element, index) => (
+                      <Box
+                        key={Element._id}
+                        w={"280px"}
+                        borderRadius={"10px"}
+                        padding={"2px"}
+                        overflow="hidden"
+                        cursor={"pointer"}
+                        onClick={() => setPageStatus(index + 1)}
+                      >
+                        <Box
+                          w={"100%"}
+                          border="1px solid rgba(127, 127, 127, 0.2)"
+                          borderRadius={"10px"}
+                          padding={"4px"}
+                          bg="white"
+                        >
+                          <Box
+                            h={"100px"}
+                            backgroundColor="rgba(127, 127, 127, 0.2)"
+                            borderRadius="6px 6px 0 0"
+                          >
+                            <Image layout="fill" src={`https://offingo.herokuapp.com/${Element.image.filePath}`} />
+                          </Box>
+                          <Box h={"fit-content"} p="5px">
+                            <Box color="black" fontWeight="500">
+                              {Element.title}
+                            </Box>
+                            <Box
+                              height="34px"
+                              lineHeight="17px"
+                              color="gray"
+                              fontSize="14px"
+                              overflow="hidden"
+                              textOverflow="ellipsis"
+                              mt="5px"
+                            >
+                              {Element.content}
+                            </Box>
+                            <Text
+                              color="red"
+                              fontSize={"12px"}
+                              mt="4px"
+                              cursor={"pointer"}
+                            >
+                              Read more...
+                            </Text>
+                          </Box>
+                        </Box>
+                      </Box>
+                    ))}
+                </Flex>
+              </Flex>
+            ) : (
+              ""
+            )}
+
+            {pageStatus === "write" ? (
+              <Flex w="100%" position={"relative"}>
+                <Button
+                  position={"absolute"}
+                  right="10%"
+                  colorScheme={"whatsapp"}
+                  top="90px"
+                  onClick={() => {
+                    saveBlog();
+                    setContent(null);
+                    setTitle(null);
+                  }}
+                >
+                  save
+                </Button>
+                <Hide breakpoint="(max-width: 600px)">
+                  <Box
+                    minW={"280px"}
+                    borderRight="1px solid rgba(127, 127, 127, 0.1)"
+                    h={"100vh"}
+                    overflowY="scroll"
+                    p={"10px"}
+                  >
+                    <Box
+                      w={"100%"}
+                      borderRadius={"10px"}
+                      padding={"2px"}
+                      mt="100px"
+                      id="blogDiv"
+                      overflow="hidden"
+                    >
+                      <Box
+                        w={"100%"}
+                        border="1px solid rgba(127, 127, 127, 0.2)"
+                        borderRadius={"10px"}
+                        padding={"4px"}
+                        bg="white"
+                      >
+                        <Box
+                          h={"100px"}
+                          backgroundColor="rgba(127, 127, 127, 0.2)"
+                          borderRadius="6px 6px 0 0"
+                        >
+                          {/* <img /> */}
+                        </Box>
+                        <Box h={"fit-content"} p="5px">
+                          <Box color="black" fontWeight="500">
+                            {title ? title : "Title"}
+                          </Box>
+                          <Box
+                            width={"250px"}
+                            height="34px"
+                            lineHeight="17px"
+                            color="gray"
+                            fontSize="14px"
+                            overflow="hidden"
+                            textOverflow="ellipsis"
+                            mt="5px"
+                          >
+                            <Text>{content ? content : "Blog Content"}</Text>
+                          </Box>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Hide>
+                <Box mt={"100px"} flexGrow={1} pl="5%" pr="5%">
+                  <input
+                    type={"text"}
+                    placeholder="Title"
+                    value={title}
+                    style={{
+                      fontSize: "40px",
+                      width: "100%",
+                      outline: "transparent",
+                      fontWeight: "500",
+                    }}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                  <textarea
+                    placeholder="Write your blog here..."
+                    value={content}
+                    style={{
+                      fontSize: "20px",
+                      width: "100%",
+                      outline: "transparent",
+                      mt: "20px",
+                      color: "gray",
+                      resize: "none",
+                      height: "400px",
+                    }}
+                    onChange={(e) => setContent(e.target.value)}
+                  />
+                  <h3>Upload an image for your blog</h3>
+                  <input
+                    type={"file"}
+                    onChange={(e) => {
+                      setFile(e.target.files[0]);
+                    }}
+                  />
+                </Box>
+              </Flex>
+            ) : pageStatus ? (
+              <Flex w="100%" h={"100vh"} position="relative">
                 {tok ? (
-                  <Flex gap={"10px"}>
-                    <Button colorScheme={"green"} variant={"ghost"} onClick={()=>setPageStatus('write')}>
-                      Write Blog
+                  <Flex
+                    position="absolute"
+                    top="80px"
+                    right={"50px"}
+                    gap="10px"
+                  >
+                    {updateStatus === pageStatus ? (
+                      <Button
+                        colorScheme={"whatsapp"}
+                        variant="outline"
+                        onClick={() => {
+                          setUpdateStatus(null);
+                          updateValue();
+                        }}
+                      >
+                        Done
+                      </Button>
+                    ) : (
+                      <Button
+                        colorScheme={"yellow"}
+                        variant="outline"
+                        onClick={() => {
+                          setUpdateStatus(pageStatus);
+                          setContent(blogData[pageStatus - 1].content);
+                          setTitle(blogData[pageStatus - 1].title);
+                        }}
+                      >
+                        Update
+                      </Button>
+                    )}
+                    <Button colorScheme={"red"} onClick={() => delteBlog()}>
+                      Delete
                     </Button>
-                    <Button colorScheme={"red"}>Logout</Button>
                   </Flex>
                 ) : (
-                  <Button onClick={onOpen} colorScheme={"whatsapp"}>
-                    Login
-                  </Button>
+                  ""
                 )}
-              </Hide>
-              <Show breakpoint="(max-width: 600px)">
-                <Box cursor={"pointer"} onClick={() => setMenuStatus(true)}>
-                  <Menu />
+                <Hide breakpoint="(max-width: 600px)">
+                  <Box
+                    minW={"280px"}
+                    borderRight="1px solid rgba(127, 127, 127, 0.1)"
+                    h={"calc(100vh - 70px)"}
+                    overflowY="scroll"
+                    p={"10px"}
+                    mt="70px"
+                  >
+                    {blogData &&
+                      blogData.map((Element, index) => (
+                        <Box
+                          key={index}
+                          w={"260px"}
+                          borderRadius={"10px"}
+                          padding={"2px"}
+                          mt="10px"
+                          id={pageStatus === index + 1 ? "blogDiv" : ""}
+                          overflow="hidden"
+                          cursor={pageStatus === index + 1 ? "" : "pointer"}
+                          onClick={() => setPageStatus(index + 1)}
+                        >
+                          <Box
+                            w={"100%"}
+                            border="1px solid rgba(127, 127, 127, 0.2)"
+                            borderRadius={"10px"}
+                            padding={"4px"}
+                            bg="white"
+                          >
+                            <Box
+                              h={"100px"}
+                              backgroundColor="rgba(127, 127, 127, 0.2)"
+                              borderRadius="6px 6px 0 0"
+                            >
+                              <img />
+                            </Box>
+                            <Box h={"fit-content"} p="5px">
+                              <Box color="black" fontWeight="500">
+                                {Element.title}
+                              </Box>
+                              <Box
+                                height="34px"
+                                lineHeight="17px"
+                                color="gray"
+                                fontSize="14px"
+                                overflow="hidden"
+                                textOverflow="ellipsis"
+                                mt="5px"
+                              >
+                                {Element.content}
+                              </Box>
+                              {index + 1 === pageStatus ? (
+                                ""
+                              ) : (
+                                <Text color={"red"} cursor="pointer" mt="4px">
+                                  Read more...
+                                </Text>
+                              )}
+                            </Box>
+                          </Box>
+                        </Box>
+                      ))}
+                  </Box>
+                </Hide>
+                <Box mt={"140px"} flexGrow={1} pl="5%" pr="5%">
+                  {updateStatus === pageStatus ? (
+                    <>
+                      <Input
+                        fontSize={"40px"}
+                        fontWeight="500"
+                        value={title}
+                        height="fit-content"
+                        onChange={(e) => setTitle(e.target.value)}
+                      />
+                      <Textarea
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Text fontSize={"40px"} fontWeight="500">
+                        {blogData[pageStatus - 1].title}
+                      </Text>
+                      <Box>
+                        {/* <Image layout="fill" src={"https://dummyimage.com/600x400/bebebe"}/> */}
+                      </Box>
+                      <Text fontSize={"20px"} mt="20px" color="gray">
+                        {blogData[pageStatus - 1].content}
+                      </Text>
+                    </>
+                  )}
                 </Box>
-              </Show>
-            </Flex>
-            <Box mt={'150px'}>
-                 
-            </Box>
+              </Flex>
+            ) : pageStatus ? (
+              <Flex></Flex>
+            ) : (
+              ""
+            )}
           </Flex>
+
+          {/* popup login  */}
           <Modal
             initialFocusRef={initialRef}
             finalFocusRef={finalRef}
@@ -142,6 +546,7 @@ export default function Home({ token }) {
                 <FormControl mt={4}>
                   <FormLabel>Password</FormLabel>
                   <Input
+                  type={"password"}
                     placeholder="Enter your password here..."
                     onChange={(e) => setPassword(e.target.value)}
                   />
@@ -150,18 +555,20 @@ export default function Home({ token }) {
 
               <ModalFooter>
                 <Button
-                  colorScheme="blue"
+                  colorScheme="whatsapp"
                   mr={3}
                   onClick={() => {
                     handleSubmit();
                   }}
                 >
-                  Save
+                  Login
                 </Button>
                 <Button onClick={onClose}>Cancel</Button>
               </ModalFooter>
             </ModalContent>
           </Modal>
+
+          {/* res menu */}
           <Show breakpoint="(max-width: 600px)">
             {menuStatus && (
               <Flex
@@ -176,16 +583,46 @@ export default function Home({ token }) {
                 justify={"center"}
                 alignItems={"center"}
               >
-                <Box position={'absolute'} left="30px" top="30" onClick={()=>{setMenuStatus(false)}}>
-                    <CloseButton  size='lg' />
+                <Box
+                  position={"absolute"}
+                  left="30px"
+                  top="30"
+                  onClick={() => {
+                    setMenuStatus(false);
+                  }}
+                >
+                  <CloseButton size="lg" />
                 </Box>
-                {tok?
-                <Flex direction={"column"} w="100%">
-                    <Button variant={'ghost'} w={"100%"} onClick={()=>{setMenuStatus(false); setPageStatus('write')}}>Write Blog</Button>
-                    <Button variant={'ghost'} w={"100%"}>Logout</Button>
-              </Flex>:<Flex direction={"column"} w="100%">
-              <Button variant={'ghost'} w={"100%"} onClick={()=>{setMenuStatus(false);onOpen()}}>Login</Button>
-                </Flex>}
+                {tok ? (
+                  <Flex direction={"column"} w="100%">
+                    <Button
+                      variant={"ghost"}
+                      w={"100%"}
+                      onClick={() => {
+                        setMenuStatus(false);
+                        setPageStatus("write");
+                      }}
+                    >
+                      Write Blog
+                    </Button>
+                    <Button variant={"ghost"} w={"100%"}>
+                      Logout
+                    </Button>
+                  </Flex>
+                ) : (
+                  <Flex direction={"column"} w="100%">
+                    <Button
+                      variant={"ghost"}
+                      w={"100%"}
+                      onClick={() => {
+                        setMenuStatus(false);
+                        onOpen();
+                      }}
+                    >
+                      Login
+                    </Button>
+                  </Flex>
+                )}
               </Flex>
             )}
           </Show>
