@@ -57,4 +57,4 @@ function MenuBar  ({ token }) {
     </Show>
   );
 };
-export default Menu;
+export default MenuBar;
