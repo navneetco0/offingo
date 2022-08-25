@@ -1,13 +1,14 @@
-import {
-  Box,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { pageStatus } from "../redux/actions/main";
 import Link from "next/link";
+import { MyImage } from "./MyImage";
+// const myLoader = ({ src, width, quality }) => {
+//   return `https://offingo.herokuapp.com${src}?w=${width}&q=${quality || 75}`;
+// };
 
-function BlogCard ({ key,index, data, w, h }){
+function BlogCard({ key, index, data, w, h }) {
   const dispatch = useDispatch();
   const { page_status } = useSelector((state) => state.main);
   const API = "https://offingo.herokuapp.com";
@@ -39,12 +40,14 @@ function BlogCard ({ key,index, data, w, h }){
             overflow={"hidden"}
             position={"relative"}
           >
-            <Image
+            <MyImage src={data.image.filePath} />
+            {/* <Image
+              loader={myLoader}
               borderRadius="6px 6px 0 0"
               layout="fill"
-              src={`${API}/${data.image.filePath}`}
+              src={data.image.filePath}
               alt=""
-            />
+            /> */}
           </Box>
           <Box h={"fit-content"} p="5px">
             <Box color="black" fontWeight="500">
@@ -73,6 +76,6 @@ function BlogCard ({ key,index, data, w, h }){
       </Box>
     </Link>
   );
-};
+}
 
 export default BlogCard;
