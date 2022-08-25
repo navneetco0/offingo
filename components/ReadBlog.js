@@ -2,7 +2,7 @@ import { Flex, Button, Box, Hide, Text, Input, Textarea } from "@chakra-ui/react
 import Image from "next/image";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { BlogCard } from "./BlogCard";
+import BlogCard from "./BlogCard";
 import { API } from "./data";
 
 function ReadBlog ({data, token }) {

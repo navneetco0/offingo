@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { BlogCard } from "./BlogCard";
+import BlogCard from "./BlogCard";
 import { Flex } from "@chakra-ui/react";
 
 function Blogs({dir}) {

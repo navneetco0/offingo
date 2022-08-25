@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { menuStatus, pageStatus } from "../redux/actions/main";
-import { LoginModal } from "./LoginModal";
+import  LoginModal  from "./LoginModal";
 
 function BlogNav ({ token }) {
     const dispatch = useDispatch()

@@ -1,14 +1,13 @@
 import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
 import { ChakraProvider, Flex } from "@chakra-ui/react";
-import { useState } from "react";
 import React, { useEffect } from "react";
 import { getBlogData } from "../redux/actions/main";
-import { BlogNav } from "../components/BlogNav";
-import { Menu } from "../components/Menu";
-import { BlogCard } from "../components/BlogCard";
-import { CreateBlog } from "../components/CreateBlog";
-import { ReadBlog } from "../components/ReadBlog";
+import BlogNav from "../components/BlogNav";
+import Menu from "../components/Menu";
+import BlogCard from "../components/BlogCard";
+import CreateBlog from "../components/CreateBlog";
+import ReadBlog from "../components/ReadBlog";
 
 export default function Home({ token }) {
   const dispatch = useDispatch();
