@@ -7,14 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { pageStatus } from "../redux/actions/main";
 import Link from "next/link";
 
-export const BlogCard = ({ index, data, w, h }) => {
+function BlogCard ({ key,index, data, w, h }){
   const dispatch = useDispatch();
   const { page_status } = useSelector((state) => state.main);
   const API = "https://offingo.herokuapp.com";
   return (
     <Link href={"/blog"}>
       <Box
-        key={data._id}
+        key={key}
         minW={w}
         maxW={w}
         borderRadius={"10px"}
@@ -73,3 +73,5 @@ export const BlogCard = ({ index, data, w, h }) => {
     </Link>
   );
 };
+
+export default BlogCard;

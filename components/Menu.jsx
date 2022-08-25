@@ -3,7 +3,7 @@ import { Button, Flex, Box, Show, CloseButton } from "@chakra-ui/react";
 import { menuStatus, modalStatus, pageStatus } from "../redux/actions/main";
 import { LoginModal } from "./LoginModal";
 
-export const Menu = ({ token }) => {
+function Menu  ({ token }) {
     const dispatch = useDispatch();
   const { menu_status } = useSelector((state) => state.main);
   return (
@@ -57,3 +57,4 @@ export const Menu = ({ token }) => {
     </Show>
   );
 };
+export default Menu;

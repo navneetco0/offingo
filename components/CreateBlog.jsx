@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import Image from "next/image";
 import { postBlogData } from "../redux/actions/main";
 
-export const CreateBlog = ({token}) => {
+function CreateBlog ({token}) {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [file, setFile] = useState("");
@@ -126,3 +126,5 @@ export const CreateBlog = ({token}) => {
     </Flex>
   );
 };
+
+export default CreateBlog;

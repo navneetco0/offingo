@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { menuStatus, pageStatus } from "../redux/actions/main";
 import { LoginModal } from "./LoginModal";
 
-export const BlogNav = ({ token }) => {
+function BlogNav ({ token }) {
     const dispatch = useDispatch()
   return (
     <Flex
@@ -64,3 +64,5 @@ export const BlogNav = ({ token }) => {
     </Flex>
   );
 };
+
+export default BlogNav;

@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { BlogCard } from "./BlogCard";
 import { API } from "./data";
 
-export const ReadBlog = ({data, token }) => {
+function ReadBlog ({data, token }) {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [file, setFile] = useState("");
@@ -76,7 +76,7 @@ export const ReadBlog = ({data, token }) => {
         >
           {data &&
             data.map((Element, index) => (
-              <BlogCard index={index} data={Element} w={"260px"} h={"100px"} />
+              <BlogCard key={Element._id} index={index} data={Element} w={"260px"} h={"100px"} />
             ))}
         </Box>
       </Hide>
@@ -141,3 +141,5 @@ export const ReadBlog = ({data, token }) => {
     </Flex>
   );
 };
+
+export default ReadBlog;

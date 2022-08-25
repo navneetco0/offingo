@@ -11,7 +11,7 @@ function Blogs({dir}) {
       <Flex dir="row" gap="40px" overflowX={"scroll"} p="0 8%">
         {blog_data &&
           blog_data.map((element, index) => (
-            <BlogCard index={index} data={element} w="510px" h="220px" />
+            <BlogCard key={element._id} index={index} data={element} w="510px" h="220px" />
           ))}
       </Flex>
     </>

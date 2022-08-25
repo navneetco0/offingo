@@ -16,7 +16,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/actions/main";
 
-export const LoginModal = ({variant}) => {
+function LoginModal ({variant}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
@@ -68,3 +68,5 @@ export const LoginModal = ({variant}) => {
     </>
   );
 };
+
+export default LoginModal;
