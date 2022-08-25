@@ -103,12 +103,12 @@ export default function Home({ token }) {
   };
   const delteBlog = async () => {
     await axios
-      .delete(`${API}/blog/${blogData[pageStatus - 1]._id}`, {
+      .delete(`http://localhost:5000/blog/${blogData[pageStatus - 1]._id}`, {
         headers: {
           Authorization: `Bearer ${tok}`,
         },
       })
-      .then((res) => setPageStatus(pageStatus - 1))
+      .then((res) => blogData.length===1?setPageStatus(null):setPageStatus(pageStatus - 1))
       .catch((error) => {
         if (error.response.data === "jwt expires") setTok(null);
         toast({
