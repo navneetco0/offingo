@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import login from "../redux/actions/main";
+import {login} from "../redux/actions/main";
 
 function LoginModal ({variant}) {
   const { isOpen, onOpen, onClose } = useDisclosure();

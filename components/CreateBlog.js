@@ -63,7 +63,7 @@ function CreateBlog ({token}) {
                 borderRadius="6px 6px 0 0"
                 position={'relative'}
               >
-                {realImage ? <Image layout="fill" src={realImage} /> : ""}
+                {realImage ? <Image layout="fill" src={realImage} alt="" /> : ""}
               </Box>
               <Box h={"fit-content"} p="5px">
                 <Box color="black" fontWeight="500">

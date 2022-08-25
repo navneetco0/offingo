@@ -109,6 +109,7 @@ function ReadBlog ({data, token }) {
                 borderRadius="6px 6px 0 0"
                 layout="fill"
                 src={`${API}/${data[page_status - 1].image.filePath}`}
+                alt=""
               />
             </Box>
           </>
@@ -130,6 +131,7 @@ function ReadBlog ({data, token }) {
                 borderRadius="6px 6px 0 0"
                 layout="fill"
                 src={`${API}/${data[page_status - 1].image.filePath}`}
+                alt=""
               />
             </Box>
             <Text fontSize={"20px"} mt="20px" color="gray">

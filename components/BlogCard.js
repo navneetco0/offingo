@@ -43,6 +43,7 @@ function BlogCard ({ key,index, data, w, h }){
               borderRadius="6px 6px 0 0"
               layout="fill"
               src={`${API}/${data.image.filePath}`}
+              alt=""
             />
           </Box>
           <Box h={"fit-content"} p="5px">

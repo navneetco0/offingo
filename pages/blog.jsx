@@ -53,6 +53,7 @@ export default function Home({ token }) {
                   {blog_data &&
                     blog_data.map((Element, index) => (
                       <BlogCard
+                      key={Element._id}
                         index={index}
                         data={Element}
                         w="280px"
