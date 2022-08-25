@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Flex, Box, Show, CloseButton } from "@chakra-ui/react";
 import { menuStatus, modalStatus, pageStatus } from "../redux/actions/main";
-import { LoginModal } from "./LoginModal";
+import  LoginModal  from "./LoginModal";
 
-function Menu  ({ token }) {
+function MenuBar  ({ token }) {
     const dispatch = useDispatch();
   const { menu_status } = useSelector((state) => state.main);
   return (

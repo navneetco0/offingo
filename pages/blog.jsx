@@ -4,7 +4,7 @@ import { ChakraProvider, Flex } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { getBlogData } from "../redux/actions/main";
 import BlogNav from "../components/BlogNav";
-import Menu from "../components/Menu";
+import MenuBar from "../components/MenuBar";
 import BlogCard from "../components/BlogCard";
 import CreateBlog from "../components/CreateBlog";
 import ReadBlog from "../components/ReadBlog";
@@ -73,7 +73,7 @@ export default function Home({ token }) {
               ""
             )}
           </Flex>
-          <Menu token={token || Token} />
+          <MenuBar token={token || Token} />
         </main>
 
         <footer></footer>
