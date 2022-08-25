@@ -2,8 +2,10 @@ import { Flex, Button, Box, Hide, Text, Input, Textarea } from "@chakra-ui/react
 import Image from "next/image";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { deleteBlogData, pageStatus, patchBlogData } from "../redux/actions/main";
 import BlogCard from "./BlogCard";
 import { API } from "./data";
+import { MyImage } from "./MyImage";
 
 function ReadBlog ({data, token }) {
   const dispatch = useDispatch();
@@ -104,13 +106,7 @@ function ReadBlog ({data, token }) {
               overflow={"hidden"}
               position={"relative"}
             >
-              <Box></Box>
-              <Image
-                borderRadius="6px 6px 0 0"
-                layout="fill"
-                src={`${API}/${data[page_status - 1].image.filePath}`}
-                alt=""
-              />
+              <MyImage src={data.image.filePath} />
             </Box>
           </>
         ) : (

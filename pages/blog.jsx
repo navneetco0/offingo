@@ -35,7 +35,6 @@ export default function Home({ token }) {
             alignItems="center"
             direction={"column"}
           >
-            {/* write  */}
             {!page_status ? (
               <Flex
                 w={"100%"}

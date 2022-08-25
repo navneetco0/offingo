@@ -41,13 +41,6 @@ function BlogCard({ key, index, data, w, h }) {
             position={"relative"}
           >
             <MyImage src={data.image.filePath} />
-            {/* <Image
-              loader={myLoader}
-              borderRadius="6px 6px 0 0"
-              layout="fill"
-              src={data.image.filePath}
-              alt=""
-            /> */}
           </Box>
           <Box h={"fit-content"} p="5px">
             <Box color="black" fontWeight="500">
