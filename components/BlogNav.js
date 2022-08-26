@@ -50,7 +50,7 @@ function BlogNav ({ token }) {
             >
               Write Blog
             </Button>
-            <Button colorScheme={"red"} onClick={()=>Cookies.remove('token', {path:'/',  domain: 'offingo-anoxco0.vercel.app'})}>Logout</Button>
+            <Button colorScheme={"red"} onClick={()=>Cookies.remove('token', {path:'/',  domain: '.vercel.app'})}>Logout</Button>
           </Flex>
         ) : (
           <LoginModal />

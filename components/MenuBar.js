@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Flex, Box, Show, CloseButton } from "@chakra-ui/react";
-import { menuStatus, modalStatus, pageStatus } from "../redux/actions/main";
+import { menuStatus, pageStatus } from "../redux/actions/main";
 import  LoginModal  from "./LoginModal";
 import Cookies from "js-cookie";
 
@@ -44,7 +44,7 @@ function MenuBar  ({ token }) {
               >
                 Write Blog
               </Button>
-              <Button variant={"ghost"} w={"100%"} onClick={()=>Cookies.remove("token", {path:''})}>
+              <Button variant={"ghost"} w={"100%"} onClick={()=>Cookies.remove('token', {path:'/',  domain: '.vercel.app'})}>
                 Logout
               </Button>
             </Flex>
