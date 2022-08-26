@@ -75,6 +75,16 @@ export const pageStatus = (payload) =>({
     type:PAGE_STATUS, payload
 })
 
+export const logout = (username, password)=>(dispatch)=>{
+  fetch("/api/login", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ token: res.data.token }),
+  });
+  dispatch(setToken(res.data.token));
+}
 
 export const login = (username, password) => (dispatch) => {
   dispatch(loginLoading());

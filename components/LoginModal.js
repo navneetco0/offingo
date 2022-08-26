@@ -23,7 +23,7 @@ function LoginModal ({variant}) {
   const [password, setPassword] = useState("");
   return (
     <>
-      <Button variant={variant||""} colorScheme={variant?"gray":"whatsapp"} onClick={onOpen}>
+      <Button variant={variant||"solid"} colorScheme={variant?"gray":"whatsapp"} onClick={onOpen}>
         Login
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>

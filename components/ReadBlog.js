@@ -82,7 +82,7 @@ function ReadBlog ({data, token }) {
             ))}
         </Box>
       </Hide>
-      <Box mt={"80px"} flexGrow={1} pl="5%" pr="5%" overflow={"scroll"}>
+      <Box mt={"110px"} flexGrow={1} pl="5%" pr="5%" overflow={"scroll"}>
         {updateStatus === page_status ? (
           <>
             <Input
@@ -106,7 +106,7 @@ function ReadBlog ({data, token }) {
               overflow={"hidden"}
               position={"relative"}
             >
-              <MyImage src={data.image.filePath} />
+              <MyImage src={data[page_status - 1].image.filePath} />
             </Box>
           </>
         ) : (
@@ -123,12 +123,7 @@ function ReadBlog ({data, token }) {
               overflow={"hidden"}
               position={"relative"}
             >
-              <Image
-                borderRadius="6px 6px 0 0"
-                layout="fill"
-                src={`${API}/${data[page_status - 1].image.filePath}`}
-                alt=""
-              />
+              <MyImage src={data[page_status - 1].image.filePath} />
             </Box>
             <Text fontSize={"20px"} mt="20px" color="gray">
               {data[page_status - 1].content}

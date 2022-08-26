@@ -1,6 +1,5 @@
 import { Logo } from "../assets/svgs/Logo";
 import { Menu } from "../assets/svgs/Menu";
-
 import {
   Flex,
   Box,
@@ -11,9 +10,10 @@ import {
 import { useDispatch } from "react-redux";
 import { menuStatus, pageStatus } from "../redux/actions/main";
 import  LoginModal  from "./LoginModal";
+import Cookies from "js-cookie";
 
 function BlogNav ({ token }) {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
   return (
     <Flex
       pt={["10px", "12px"]}
@@ -50,7 +50,7 @@ function BlogNav ({ token }) {
             >
               Write Blog
             </Button>
-            <Button colorScheme={"red"}>Logout</Button>
+            <Button colorScheme={"red"} onClick={()=>Cookies.remove('token', {path:'/',  domain: 'https://offingo-anoxco0.vercel.app'})}>Logout</Button>
           </Flex>
         ) : (
           <LoginModal />
