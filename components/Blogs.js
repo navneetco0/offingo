@@ -11,7 +11,7 @@ function Blogs({ dir }) {
     <>
       <Flex dir="row" gap="40px" overflowX={"scroll"} p="0 8%">
         {blog_data_loading&&arr.map((Element, index) => (
-          <Box>
+          <Box key={index}>
             <Box
               minW={'510px'}
               maxW={'220px'}
