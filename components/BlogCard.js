@@ -1,21 +1,15 @@
 import { Box, Text } from "@chakra-ui/react";
-import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { pageStatus } from "../redux/actions/main";
 import Link from "next/link";
 import { MyImage } from "./MyImage";
-// const myLoader = ({ src, width, quality }) => {
-//   return `https://offingo.herokuapp.com${src}?w=${width}&q=${quality || 75}`;
-// };
 
-function BlogCard({ key, index, data, w, h }) {
+function BlogCard({ Key, index, data, w, h }) {
   const dispatch = useDispatch();
   const { page_status } = useSelector((state) => state.main);
-  const API = "https://offingo.herokuapp.com";
   return (
-    <Link href={"/blog"}>
+    <Link href={"/blog"} key={Key}>
       <Box
-        key={key}
         minW={w}
         maxW={w}
         borderRadius={"10px"}

@@ -1,19 +1,31 @@
-import { Flex, Button, Box, Hide, Text, Input, Textarea } from "@chakra-ui/react";
-import Image from "next/image";
+import {
+  Flex,
+  Button,
+  Box,
+  Hide,
+  Text,
+  Input,
+  Textarea,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteBlogData, pageStatus, patchBlogData } from "../redux/actions/main";
+import { Edit } from "../assets/svgs/Edit";
+import {
+  deleteBlogData,
+  pageStatus,
+  patchBlogData,
+} from "../redux/actions/main";
 import BlogCard from "./BlogCard";
 import { API } from "./data";
 import { MyImage } from "./MyImage";
 
-function ReadBlog ({data, token }) {
+function ReadBlog({ data, token }) {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [file, setFile] = useState("");
   const [content, setContent] = useState("");
   const [updateStatus, setUpdateStatus] = useState(null);
-  const { page_status } = useSelector(state=>state.main)
+  const { page_status } = useSelector((state) => state.main);
   return (
     <Flex w="100%" h={"100vh"} position="relative">
       {token ? (
@@ -53,10 +65,7 @@ function ReadBlog ({data, token }) {
             colorScheme={"red"}
             onClick={() => {
               dispatch(
-                deleteBlogData(
-                  { id: data[page_status - 1]._id },
-                  token
-                )
+                deleteBlogData({ id: data[page_status - 1]._id }, token)
               );
               dispatch(pageStatus(page_status - 1));
             }}
@@ -78,7 +87,13 @@ function ReadBlog ({data, token }) {
         >
           {data &&
             data.map((Element, index) => (
-              <BlogCard key={Element._id} index={index} data={Element} w={"260px"} h={"100px"} />
+              <BlogCard
+                Key={index}
+                index={index}
+                data={Element}
+                w={"260px"}
+                h={"100px"}
+              />
             ))}
         </Box>
       </Hide>
@@ -133,6 +148,6 @@ function ReadBlog ({data, token }) {
       </Box>
     </Flex>
   );
-};
+}
 
 export default ReadBlog;

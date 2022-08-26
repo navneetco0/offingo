@@ -19,8 +19,7 @@ import {login} from "../redux/actions/main";
 function LoginModal ({variant}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+
   return (
     <>
       <Button variant={variant||"solid"} colorScheme={variant?"gray":"whatsapp"} onClick={onOpen}>

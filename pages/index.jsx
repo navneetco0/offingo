@@ -33,7 +33,7 @@ export default function Home() {
             <div style={{ width: "139px" }}>
               <Logo />
             </div>
-            <LogoText />
+            <p style={{fontSize:'14px', fontWeight:500, textAlign:"center", fontStyle:'italic', color: "#838DA6"}} >Making your <q style={{color:'red'}}>Clothing shopping experience</q> better</p>
           </div>
           <div className={styles.mid}>
             <div className={styles.left}>
@@ -75,7 +75,7 @@ export default function Home() {
                   style={{
                     color: "#A0AEC0",
                     fontSize: "20px",
-                    marginTop: "84px",
+                    margin: "84px 0 20px",
                   }}
                 >
                   Connect with us on
@@ -108,28 +108,33 @@ export default function Home() {
             </div>
 
             <div className={styles.right}>
-              <div className={styles.logoImage}>
-                <div className={styles.rightTexts}>
-                  {texts.map((element, index) => (
-                    <div
-                      key={index}
-                      className={styles.texts}
-                      style={{
-                        borderBottom: index !== 3 ? "2px solid #F56565" : "",
-                      }}
-                    >
-                      <Check /> {element}
-                    </div>
-                  ))}
-                  <p>& many more...</p>
+              <div className={styles.rightBox}>
+                <div className={styles.logoImage}>
+                  <div className={styles.rightTexts}>
+                    {texts.map((element, index) => (
+                      <div
+                        key={index}
+                        className={styles.texts}
+                        style={{
+                          borderBottom: index !== 3 ? "2px solid #F56565" : "",
+                        }}
+                      >
+                        <Check /> {element}
+                      </div>
+                    ))}
+                    <p>& many more...</p>
+                  </div>
+                  <div className={styles.logoBox}></div>
+                  <Image layout="fill" src="/image.png" alt="" />
                 </div>
-                <div className={styles.logoBox}></div>
-                <Image layout="fill" src="/image.png" alt="" />
               </div>
             </div>
           </div>
           <div className={styles.blog}>
-            <Text fontSize={30} fontWeight={500} color="#111213" ml="8%"> Blogs</Text>
+            <Text fontSize={30} fontWeight={500} color="#111213" ml="8%">
+              {" "}
+              Blogs
+            </Text>
             <Blogs />
           </div>
         </main>

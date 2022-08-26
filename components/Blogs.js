@@ -9,12 +9,12 @@ function Blogs({ dir }) {
   const arr = new Array(25).fill(0);
   return (
     <>
-      <Flex dir="row" gap="40px" overflowX={"scroll"} p="0 8%">
+      <Flex dir="row" gap="2%" overflowX={"scroll"} p="0 8%">
         {blog_data_loading&&arr.map((Element, index) => (
           <Box key={index}>
             <Box
-              minW={'510px'}
-              maxW={'220px'}
+              minW={'320px'}
+              maxW={'150px'}
               borderRadius={"10px"}
               padding={"2px"}
               overflow="hidden"
@@ -50,7 +50,7 @@ function Blogs({ dir }) {
         ))}
         {blog_data &&
           blog_data.map((element, index) => (
-            <BlogCard key={element._id} index={index} data={element} w="510px" h="220px" />
+            <BlogCard Key={element._id} index={index} data={element} w="320px" h="160px" />
           ))}
       </Flex>
     </>

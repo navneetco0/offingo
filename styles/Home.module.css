@@ -56,6 +56,7 @@
 
 .social_button {
   height: 40px;
+  width: 150px;
   padding: 0 16px;
   display: flex;
   align-items: center;
@@ -63,7 +64,7 @@
   font-weight: 600;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
-  width: fit-content;
+  justify-content: center;
 }
 
 .social_button:hover {
@@ -202,7 +203,7 @@
   box-shadow: inset 0px -11px 8px -10px #ccc;
 }
 .blog {
-  margin: 125px 0 100px 0;
+  margin: 50px 0 50px 0;
 }
 
 .blogMain {
@@ -302,19 +303,6 @@
     filter: invert(1);
   }
 }
-/* 
-@media only screen and (max-width: 1370px) {
-  .social_medias {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 10px;
-  }
-  .heading {
-    font-size: 35px;
-    font-weight: 700;
-    text-align: center;
-  }
-} */
 
 .soacialP{
   color: #A0AEC0;
@@ -331,6 +319,7 @@
   }
   .heading {
     text-align: center;
+    line-height: 37px;
     /* width:max-content; */
     font-size: 35px;
     font-weight: 700;
@@ -350,7 +339,7 @@
   .clothes {
     display: flex;
     position: relative;
-    width: 310px;
+    width: 320px;
     min-height: 150px;
     margin-top: 50px;
   }
@@ -421,7 +410,7 @@
 
 @media only screen and (max-width: 950px) {
   .social_medias {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
   }
   .heading {
@@ -474,6 +463,14 @@
     width: 308px;
     left: -100px;
   }
+  .rightBox{
+    width: 355px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .right{
+    justify-content: center;
+  }
   .rightTexts {
     width: 230px;
     left: -170px;
@@ -493,11 +490,17 @@
     gap: 10px;
   }
   .rightTexts {
-    width: 180px;
-    left: -150px;
+    width: 100%;
+    left: -85%;
     height: fit-content;
     top: 60px;
     padding: 0 8px;
+  }
+  .rightBox{
+    max-width: 90%;
+    display: flex;
+    justify-content: flex-end;
+    margin: auto;
   }
   .texts {
     font-size: 12px;
@@ -505,12 +508,86 @@
   }
   .logoImage {
     width: 163.5px;
-    height: 319.16px;
+    height: 300.16px;
   }
   .mid {
     margin-top: 20px;
   }
   .logoBox {
-    width: 208px;
+    width: 188px;
+    left: -20%;
+  }
+  .footerImg{
+    flex-wrap: wrap;
+    width: auto;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  
+  .clothes {
+    display: flex;
+    position: relative;
+    max-height: 310px;
+    width: 140px;
+  }
+  
+  .dress {
+    position: absolute;
+    border: 1px solid #e7e6e6;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: white;
+    padding: 10px;
+  }
+  
+  .cloth1 {
+    width: 52px;
+    height: 52px;
+    left: 67px;
+    z-index: 1;
+  }
+  
+  .cloth2 {
+    width: 83px;
+    height: 83px;
+    z-index: 3;
+    top: 40px;
+    left: 10px;
+  }
+  
+  .cloth3 {
+    width: 69px;
+    height: 69px;
+    left: 60px;
+    top: 107px;
+    z-index: 2;
+  }
+  
+  .cloth4 {
+    height: 81px;
+    width: 81px;
+    left: 10px;
+    top: 145px;
+    z-index: 1;
+  }
+  
+  .cloth5 {
+    width: 52px;
+    height: 52px;
+    top: 207px;
+    left: 66px;
+    z-index: 2;
+  }
+  
+  .cloth6 {
+    width: 56px;
+    height: 56px;
+    top: 250px;
+    left: 30px;
+    z-index: 3;
+  }
+  .heading{
+    margin-top: 230px;
   }
 }
