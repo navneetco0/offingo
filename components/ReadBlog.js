@@ -87,13 +87,14 @@ function ReadBlog({ data, token }) {
         >
           {data &&
             data.map((Element, index) => (
-              <BlogCard
-                Key={index}
-                index={index}
-                data={Element}
-                w={"260px"}
-                h={"100px"}
-              />
+              <Box key={Element._id}>
+                <BlogCard
+                  index={index}
+                  data={Element}
+                  w={"260px"}
+                  h={"100px"}
+                />
+              </Box>
             ))}
         </Box>
       </Hide>

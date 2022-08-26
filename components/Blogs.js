@@ -50,7 +50,9 @@ function Blogs({ dir }) {
         ))}
         {blog_data &&
           blog_data.map((element, index) => (
-            <BlogCard Key={element._id} index={index} data={element} w="320px" h="160px" />
+            <Box key={element._id}>
+              <BlogCard Key={element._id} index={index} data={element} w="320px" h="160px" path={'/blog'} />
+            </Box>
           ))}
       </Flex>
     </>

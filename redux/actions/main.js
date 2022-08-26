@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Router } from "next/router";
 
 export const LOGIN_LOADING = "LOGIN_LOADING";
 export const LOGIN_ERROR = "LOGIN_ERROR";
@@ -86,25 +87,6 @@ export const logout = (username, password)=>(dispatch)=>{
   dispatch(setToken(res.data.token));
 }
 
-export const login = (username, password) => (dispatch) => {
-  dispatch(loginLoading());
-  axios
-    .post("https://offingo.herokuapp.com/login", {
-      username,
-      password,
-    })
-    .then((res) => {
-      fetch("/api/login", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token: res.data.token }),
-      });
-      dispatch(setToken(res.data.token));
-    })
-    .catch((error) => dispatch(loginError(error)));
-};
 
 
 export const getBlogData = () => (dispatch) => {

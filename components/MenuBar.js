@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Flex, Box, Show, CloseButton } from "@chakra-ui/react";
 import { menuStatus, pageStatus } from "../redux/actions/main";
-import  LoginModal  from "./LoginModal";
 import Cookies from "js-cookie";
 
 function MenuBar  ({ token }) {
@@ -48,10 +47,7 @@ function MenuBar  ({ token }) {
                 Logout
               </Button>
             </Flex>
-          ) : (
-            <Flex direction={"column"} w="100%">
-              <LoginModal variant={"ghost"}/>
-            </Flex>
+          ) : (<></>
           )}
         </Flex>
       )}

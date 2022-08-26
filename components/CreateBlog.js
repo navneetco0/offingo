@@ -3,8 +3,10 @@ import { Flex, Button, Hide, Box, Text } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
 import { postBlogData } from "../redux/actions/main";
+import { EditPanel } from "./EditPanel";
+// import { Drag } from "./Drag";
 
-function CreateBlog ({token}) {
+function CreateBlog({ token }) {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [file, setFile] = useState("");
@@ -22,6 +24,7 @@ function CreateBlog ({token}) {
     <Flex w="100%" position={"relative"}>
       <Button
         position={"absolute"}
+        zIndex="5"
         right="10%"
         colorScheme={"whatsapp"}
         top="90px"
@@ -61,9 +64,13 @@ function CreateBlog ({token}) {
                 w={"260px"}
                 backgroundColor="rgba(127, 127, 127, 0.2)"
                 borderRadius="6px 6px 0 0"
-                position={'relative'}
+                position={"relative"}
               >
-                {realImage ? <Image layout="fill" src={realImage} alt="" /> : ""}
+                {realImage ? (
+                  <Image layout="fill" src={realImage} alt="" />
+                ) : (
+                  ""
+                )}
               </Box>
               <Box h={"fit-content"} p="5px">
                 <Box color="black" fontWeight="500">
@@ -86,7 +93,9 @@ function CreateBlog ({token}) {
           </Box>
         </Box>
       </Hide>
-      <Box mt={"100px"} flexGrow={1} pl="5%" pr="5%">
+      <Box mt={"100px"} flexGrow={1} pl="5%" pr="5%" position={"relative"}>
+        <EditPanel />
+        {/* <Drag/> */}
         <input
           type={"text"}
           placeholder="Title"
@@ -118,6 +127,7 @@ function CreateBlog ({token}) {
           type={"file"}
           onChange={(e) => {
             setFile(e.target.files[0]);
+            console.log(e.target.files[0]);
             const imgFile = URL.createObjectURL(e.target.files[0]);
             setRealImage(imgFile);
           }}
@@ -125,6 +135,6 @@ function CreateBlog ({token}) {
       </Box>
     </Flex>
   );
-};
+}
 
 export default CreateBlog;

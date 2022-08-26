@@ -3,7 +3,6 @@ import { Menu } from "../assets/svgs/Menu";
 import { Flex, Box, Show, Hide, Button } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { menuStatus, pageStatus } from "../redux/actions/main";
-import LoginModal from "./LoginModal";
 import Cookies from "js-cookie";
 
 function BlogNav({ token }) {

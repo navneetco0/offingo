@@ -2,10 +2,11 @@ import { createWrapper } from "next-redux-wrapper";
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import { main } from "./reducer/main";
+import {createBlog} from "./reducer/createBlog"
 
 
 const rootReducer = combineReducers({
-   main:main
+   main, createBlog,
 });
 
 const middleware = [thunk];

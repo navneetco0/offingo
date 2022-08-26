@@ -2,39 +2,71 @@ import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Box,
-  Button,
   Center,
   ChakraProvider,
   Flex,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Logo } from "../../assets/svgs/Logo";
 import { Email } from "../../assets/svgs/Email";
 import { Key } from "../../assets/svgs/Key";
-import { login } from "../../redux/actions/main";
+import { loginError, loginLoading, setToken } from "../../redux/actions/main";
 import Router from "next/router";
+import axios from "axios";
 
 export default function Home({ token }) {
+  const toast = useToast();
   const dispatch = useDispatch();
   const [form, setForm] = useState({
     username: "",
     password: "",
     status: null,
   });
-  
   const handleChange = (e) => {
     setForm({ ...form, [e.target.id]: e.target.value, status: e.target.id });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(login(form.username, form.password));
-    Router.push("/blog");
+    dispatch(loginLoading());
+  axios
+    .post("https://offingo.herokuapp.com/login", {
+      username:form.username,
+      password:form.password,
+    })
+    .then((res) => {
+      fetch("/api/login", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: res.data.token }),
+      });
+      dispatch(setToken(res.data.token));
+      toast({
+        position:'top',
+        title: `login successful`,
+        status: 'success',
+        isClosable: true,
+      });
+      Router.push('/blog')
+    })
+    .catch((error) => {
+      toast({
+        position:"top",
+        title: `invalid username or password`,
+        status: 'error',
+        isClosable: true,
+      });
+      dispatch(loginError(error?.response?.data?.message))
+    });
   };
-  
-  useEffect(()=>{
-    if(token) Router.push('/blog')
-  },[])
+
+  useEffect(() => {
+    if(token) Router.push('/blog');
+  }, [dispatch]);
 
   return (
     <ChakraProvider>

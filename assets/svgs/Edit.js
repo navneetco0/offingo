@@ -6,9 +6,10 @@ export const Edit = ({w,h}) => {
       width={w}
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="currentColor"
+      stroke="white"
       className="w-6 h-6"
     >
+      <title>show Edit panel</title>
       <path
         strokeLinecap="round"
         strokeLinejoin="round"

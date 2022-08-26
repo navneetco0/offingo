@@ -116,7 +116,7 @@ export default function Home() {
                         key={index}
                         className={styles.texts}
                         style={{
-                          borderBottom: index !== 3 ? "2px solid #F56565" : "",
+                          borderBottom: index !== 3 ? "2px solid #F56565" : "2px solid transparent",
                         }}
                       >
                         <Check /> {element}

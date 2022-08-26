@@ -3,10 +3,9 @@ export const Check = () => {
     <svg
       stroke="currentColor"
       fill="currentColor"
-      stroke-width="0"
+      strokeWidth="0"
       viewBox="0 0 1024 1024"
       focusable="false"
-      class="chakra-icon css-8q1awc"
       role="presentation"
       height="1em"
       width="1em"
