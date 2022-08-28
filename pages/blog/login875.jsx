@@ -66,7 +66,7 @@ export default function Home({ token }) {
 
   useEffect(() => {
     if(token) Router.push('/blog');
-  }, [dispatch]);
+  }, [token]);
 
   return (
     <ChakraProvider>

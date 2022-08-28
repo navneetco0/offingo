@@ -1,5 +1,5 @@
 
-  import {FILE_TYPE, FONT_DECORATION, FONT_SIZE, FONT_STYLE, FONT_WEIGHT} from "../actions/createBlog"
+  import {FILE_TYPE, FONT_COLOR, FONT_DECORATION, FONT_SIZE, FONT_STYLE, FONT_WEIGHT} from "../actions/createBlog"
   const initial = {
     text: "",
     font_size: 11,
@@ -7,6 +7,7 @@
     font_style: "normal",
     font_decoration: "normal",
     file_type: "text",
+    font_color:"black"
   };
   
   export const createBlog = (store = initial, { type, payload }) => {
@@ -21,6 +22,8 @@
         return {...store, font_decoration:payload}
     case FILE_TYPE:
         return {...store, file_type:payload}
+    case FONT_COLOR:
+      return {...store, font_color:payload}
       default:
         return store;
     }
