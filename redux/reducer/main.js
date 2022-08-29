@@ -18,7 +18,7 @@ import {
 const initial = {
   login_loading: false,
   login_error: null,
-  Token: "",
+  Token: "Hello",
   blog_data_loading: false,
   post_blog_data_loading: false,
   patch_blog_data_loading: false,

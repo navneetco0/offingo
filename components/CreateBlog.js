@@ -51,8 +51,23 @@ function CreateBlog({ token }) {
     const text = e.target.value;
     setContent(text);
   };
+  const handleUpdate = (e) => {
+    setContent(e.target.value);
+    let data = contentData;
+    // data[updateStatus].text = e.target.value;
+    data[updateStatus] = {
+      ...data[updateStatus],
+      text: e.target.value,
+      font_color: font_color,
+      font_decoration: font_decoration,
+      font_size: font_size,
+      font_style: font_style,
+      font_weight: font_weight,
+    };
+    setContentData(data);
+  };
   const updateParagraph = (index) => {
-    const paragraph = {
+    if(content){const paragraph = {
       text: content,
       font_size: font_size,
       font_weight: font_weight,
@@ -61,9 +76,9 @@ function CreateBlog({ token }) {
       type: "text",
       font_color: font_color,
     };
-    setContentData([...contentData, paragraph]);
+    setContentData([...contentData, paragraph]);}
     setContent(contentData[index].text);
-    dispatch(setFontSize(contentData[index.font_size]));
+    dispatch(setFontSize(contentData[index].font_size));
     dispatch(setFontWeight(contentData[index].font_weight));
     dispatch(setFontStyle(contentData[index].font_style));
     dispatch(setFontDecoration(contentData[index].font_decoration));
@@ -118,8 +133,7 @@ function CreateBlog({ token }) {
                 borderRadius="6px 6px 0 0"
                 position={"relative"}
               >
-                  {/* <Image layout="fill" src={contentData[0].img} alt="" /> */}
-
+                {/* <Image layout="fill" src={contentData[0].img} alt="" /> */}
               </Box>
               <Box h={"fit-content"} p="5px">
                 <Box color="black" fontWeight="500">
@@ -172,27 +186,25 @@ function CreateBlog({ token }) {
                       fontStyle: font_style,
                       outline: "transparent",
                       width: "100%",
-                      height: "fit-content",
+                      height:"fit-content",
                     }}
                     onKeyPress={(e) => {
                       if (e.key === "Enter") {
-                        const paragraph = {
-                          text: content,
+                        let data = contentData;
+                        data.splice(updateStatus + 1, 0, {
                           font_size: font_size,
+                          font_color: font_color,
                           font_weight: font_weight,
                           font_style: font_style,
                           font_decoration: font_decoration,
-                          type: "text",
-                          font_color: font_color,
-                        };
-                        let data = contentData;
-                        data[index] = paragraph;
+                        });
                         setContentData(data);
                         setContent("");
-                        updateParagraph(index + 1);
+                        setUpdataStatus(updateStatus + 1);
                       }
                     }}
-                    onChange={(e) => handleContent(e)}
+                    // onKeyUp={(e)=>setUpdataStatus(updateStatus+1)}
+                    onChange={(e) => handleUpdate(e)}
                   />
                 ) : (
                   <>
@@ -208,9 +220,9 @@ function CreateBlog({ token }) {
                           overflow="hidden"
                         >
                           <box position="absolute">
-                            <Close/>
+                            <Close />
                           </box>
-                            <Image layout="fill" src={element.img} alt="" />
+                          <Image layout="fill" src={element.img} alt="" />
                         </Box>
                       </>
                     ) : (
@@ -222,6 +234,8 @@ function CreateBlog({ token }) {
                         textDecoration={element.font_decoration}
                         fontStyle={element.font_style}
                         whiteSpace="wrap"
+                        minH={element.font_size}
+                        width="100%"
                         mt={"10px"}
                         onClick={() => updateParagraph(index)}
                       >
@@ -250,7 +264,7 @@ function CreateBlog({ token }) {
                   height: "400px",
                 }}
                 onKeyPress={(e) => {
-                  if (e.key === "Enter") {
+                  if (e.key === "Enter" ) {
                     const paragraph = {
                       text: content,
                       font_size: font_size,
@@ -261,7 +275,7 @@ function CreateBlog({ token }) {
                       font_color: font_color,
                     };
                     setContentData([...contentData, paragraph]);
-                    setContent("");
+                    setContent(null);
                   }
                 }}
                 onChange={(e) => handleContent(e)}
